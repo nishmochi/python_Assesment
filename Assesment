@@ -6,3 +6,4 @@ y=2
 print(x+y)
 
 int(input("hello"))
+a="nice"
