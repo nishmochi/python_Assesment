@@ -1,9 +1,3 @@
 #created by Nishwitha 
 #27/04/2023
 
-x=1
-y=2
-print(x+y)
-
-int(input("hello"))
-a="nice"
