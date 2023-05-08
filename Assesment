@@ -1,3 +1,82 @@
 #created by Nishwitha 
 #27/04/2023
 
+from tkinter import *
+from tkinter import ttk
+
+
+
+
+root=Tk()
+#Asthetics of the widget 1
+root.geometry("400x400")
+root.title("Julie's Party Hire")
+label=Label(root, text="Julie's Party Hire", font=("DejaVu sans",20))
+label.pack(pady=30)
+frame1=Frame(root,width=480, height=450)
+frame1.pack(padx=20, pady=10)
+
+#functionality of widget 1
+#Collecting customer full name through an entry box
+label3=Label(frame1,text="Customer name:   ",font=("Nimbus Mono L",10) )
+label3.grid(row=0,column=0)
+name=Entry(frame1)
+name.grid(row=0, column=1)
+
+label=Label(frame1,text="")
+label.grid(row=1)
+
+#collecting customer reciept number through an entry box
+
+label4=Label(frame1, text="Receipt Number:   ",font=("Nimbus Mono L",10))
+label4.grid(row=2, column=0)
+number=Entry(frame1)
+number.grid(row=2, column=1)
+
+label=Label(frame1,text="")
+label.grid(row=3)
+
+#collecting which item is hired from the customer using a combobox
+
+label5=Label(frame1,text="Item Hired:   ",font=("Nimbus Mono L",10))
+label5.grid(row=4, column=0)
+list=["Baloons","Party hats","Happy Birthday sign", "Candles", "Banners"]
+Item= ttk.Combobox(frame1, value=list)
+Item.current(1)
+Item.grid(row=4, column=1)
+
+label=Label(frame1,text="")
+label.grid(row=5)
+
+#collecting the number of items hired by the cutomer through a slider
+
+label6=Label(frame1, text="Number of Items:   ",font=("Nimbus Mono L",10))
+label6.grid(row=6,column=0)
+hired=Scale(frame1,from_=1, to=50,orient='horizontal')
+hired.grid(row=6,column=1)
+
+label=Label(frame1,text="")
+label.grid(row=7)
+
+#collecting the date of return using a calender function
+
+label7=Label(frame1, text="Date Of Return:   ",font=("Nimbus Mono L",10))
+label7.grid(row=8,column=0)
+
+label=Label(frame1,text="")
+label.grid(row=9)
+
+#Collecting the customers email address through an entry box
+
+label8=Label(frame1, text="Email Address:   ",font=("Nimbus Mono L",10))
+label8.grid(row=10, column=0)
+email=Entry(frame1)
+email.grid(row=10,column=1)
+
+
+
+
+
+
+
+root.mainloop()
