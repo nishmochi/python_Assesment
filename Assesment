@@ -5,11 +5,19 @@ from tkinter import *
 from tkinter import ttk
 
 
+def clear():
+    name.delete(0, END)
+    number.delete(0, END)
+    email.delete(0, END)
+    Item.current(0)
+    hired.set(1)
+    date.delete(0,END)
+
 
 
 root=Tk()
 #Asthetics of the widget 1
-root.geometry("400x400")
+root.geometry("400x450")
 root.title("Julie's Party Hire")
 label=Label(root, text="Julie's Party Hire", font=("DejaVu sans",20))
 label.pack(pady=30)
@@ -42,7 +50,7 @@ label5=Label(frame1,text="Item Hired:   ",font=("Nimbus Mono L",10))
 label5.grid(row=4, column=0)
 list=["Baloons","Party hats","Happy Birthday sign", "Candles", "Banners"]
 Item= ttk.Combobox(frame1, value=list)
-Item.current(1)
+Item.current(0)
 Item.grid(row=4, column=1)
 
 label=Label(frame1,text="")
@@ -62,9 +70,12 @@ label.grid(row=7)
 
 label7=Label(frame1, text="Date Of Return:   ",font=("Nimbus Mono L",10))
 label7.grid(row=8,column=0)
+date=Entry(frame1)
+date.grid(row=8,column=1)
 
 label=Label(frame1,text="")
 label.grid(row=9)
+
 
 #Collecting the customers email address through an entry box
 
@@ -73,10 +84,18 @@ label8.grid(row=10, column=0)
 email=Entry(frame1)
 email.grid(row=10,column=1)
 
+label=Label(frame1,text="")
+label.grid(row=11)
 
+#Adding a submit button
 
-
-
+button=Button(frame1,text="Submit",font=("Nimbus Mono L",10))
+button.grid(row=12,column=0)
+button2=Button(frame1,text="Clear",font=("Nimbus Mono L",10),command=clear)
+button2.grid(row=12,column=1)
 
 
 root.mainloop()
+
+root2=Tk()
+root2.mainloop()
