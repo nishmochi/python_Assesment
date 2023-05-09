@@ -3,7 +3,11 @@
 
 from tkinter import *
 from tkinter import ttk
+from tkcalendar import *
+from datetime import datetime
 
+now=datetime.now()
+today=now.strftime("%m/%d/%Y")
 
 def clear():
     name.delete(0, END)
@@ -11,13 +15,14 @@ def clear():
     email.delete(0, END)
     Item.current(0)
     hired.set(1)
-    date.delete(0,END)
+    date.selection_set(today)
+    
 
 
 
 root=Tk()
 #Asthetics of the widget 1
-root.geometry("400x450")
+root.geometry("500x600")
 root.title("Julie's Party Hire")
 label=Label(root, text="Julie's Party Hire", font=("DejaVu sans",20))
 label.pack(pady=30)
@@ -70,7 +75,7 @@ label.grid(row=7)
 
 label7=Label(frame1, text="Date Of Return:   ",font=("Nimbus Mono L",10))
 label7.grid(row=8,column=0)
-date=Entry(frame1)
+date=Calendar(frame1)
 date.grid(row=8,column=1)
 
 label=Label(frame1,text="")
