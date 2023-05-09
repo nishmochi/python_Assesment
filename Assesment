@@ -20,18 +20,31 @@ def clear():
     date.selection_set(today)
 
 def submit():
-    list1=[name.get(),number.get(),Item.get(),hired.get(),date.get_date(),email.get(),]
-    print(list1)
+    
+    
     date.selection_set(today)
 
-    if len(name.get()) != 0:
+    
+    if len(name.get())==0:
+       messagebox.showerror('name Error', 'Error: Please enter customer full name')
+       return
+    elif len(name.get()) != 0:
         for x in name.get():
          if x in "1234567890":
             messagebox.showerror('name Error', 'Error: Please enter valid customer full name')
             return
-    elif len(name.get())==0:
-       messagebox.showerror('name Error', 'Error: Please enter customer full name')
-       return
+         elif len(number.get())==0:
+            messagebox.showerror('name Error', 'Error: Please enter reciept number')
+            return
+         elif len(number.get())!=0:
+            for x in number.get():
+             if x not in "1234567890":
+                messagebox.showerror('name Error', 'Error: Please enter valid reciept number')
+                return
+
+
+    list1=[name.get(),number.get(),Item.get(),hired.get(),date.get_date(),email.get(),]
+    print(list1)
     
         
     
