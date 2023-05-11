@@ -33,7 +33,7 @@ def submit():
     elif len(name.get()) != 0:
         for x in name.get():
          c=c+1
-         if x not in "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz":
+         if x not in "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz ":
             messagebox.showerror('name Error', 'Error: Please enter valid customer full name')
             return
          
