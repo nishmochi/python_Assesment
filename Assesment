@@ -9,6 +9,7 @@ from datetime import datetime
 
 now=datetime.now()
 today=now.strftime("%m/%d/%Y")
+
 root2=Tk()
 
 def clear():
@@ -18,41 +19,52 @@ def clear():
     Item.current(0)
     hired.set(1)
     date.selection_set(today)
+    
 
 def submit():
+    b=0
+    d=0
+    c=0
     
-    
-    date.selection_set(today)
-
-    
+    #validation for customer full name 
     if len(name.get())==0:
        messagebox.showerror('name Error', 'Error: Please enter customer full name')
        return
     elif len(name.get()) != 0:
         for x in name.get():
+         c=c+1
          if x in "1234567890":
             messagebox.showerror('name Error', 'Error: Please enter valid customer full name')
             return
-         elif len(number.get())==0:
+         
+         #Validation for reciept number 
+         elif len(number.get())==0 and len(name.get())==c:
             messagebox.showerror('name Error', 'Error: Please enter reciept number')
             return
-         elif len(number.get())!=0:
+         
+         elif len(number.get())!=0 and len(name.get())==c:
             for x in number.get():
+             d=d+1
              if x not in "1234567890":
                 messagebox.showerror('name Error', 'Error: Please enter valid reciept number')
                 return
-
-
+             
+             #validation for email address
+             elif len(email.get())==0 and len(number.get())==d:
+                messagebox.showerror('name Error', 'Error: Please enter email address')
+                return
+             elif len(email.get())!=0 and len(number.get())==d:
+                for x in email.get():
+                   b=b+1
+                   if x=="@":
+                      break
+                   elif x!=0 and b==len(email.get()):
+                      messagebox.showerror('name Error', 'Error: Please enter valid email address')
+                      return
+                   
+      
     list1=[name.get(),number.get(),Item.get(),hired.get(),date.get_date(),email.get(),]
-    print(list1)
     
-        
-    
-    
-    
-    
-    
-
 
 
 root=Tk()
@@ -88,7 +100,7 @@ label.grid(row=3)
 
 label5=Label(frame1,text="Item Hired:   ",font=("Nimbus Mono L",10))
 label5.grid(row=4, column=0)
-list=["Baloons","Party hats","Happy Birthday sign", "Candles", "Banners"]
+list=["Party hats","Happy Birthday sign","Banners","plates","cups","table clothes","part poppers","cake toppers", "decorations","lightings","sound equipment","chairs","tables","wall draping"]
 Item= ttk.Combobox(frame1, value=list)
 Item.current(0)
 Item.grid(row=4, column=1)
@@ -100,7 +112,7 @@ label.grid(row=5)
 
 label6=Label(frame1, text="Number of Items:   ",font=("Nimbus Mono L",10))
 label6.grid(row=6,column=0)
-hired=Scale(frame1,from_=1, to=50,orient='horizontal')
+hired=Scale(frame1,from_=1, to=500,orient='horizontal')
 hired.grid(row=6,column=1)
 
 label=Label(frame1,text="")
@@ -133,6 +145,8 @@ button=Button(frame1,text="Submit",font=("Nimbus Mono L",10),command=submit)
 button.grid(row=12,column=0)
 button2=Button(frame1,text="Clear",font=("Nimbus Mono L",10),command=clear)
 button2.grid(row=12,column=1)
+
+
 
 
 root.mainloop()
