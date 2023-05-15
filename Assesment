@@ -16,8 +16,9 @@ root2=Tk()
 column = ("Customer full name","Reciept number","Item Hired","Number of items","Date of return","Email Address")
 tree=ttk.Treeview(root2,columns=column,show="headings")
 tree.heading('Customer full name', text='Customer full name')
-
+tree.column("Customer full name",width=150)
 tree.heading('Reciept number', text='Reciept number')
+tree.column("Reciept number",width=150)
 tree.heading('Item Hired', text='Item Hired')
 tree.column("Item Hired",width=150)
 tree.heading("Number of items",text="Number of items")
@@ -25,6 +26,7 @@ tree.column("Number of items",width=100)
 tree.heading("Date of return",text="Date of return")
 tree.column("Date of return",width=150)
 tree.heading("Email Address",text="Email Address")
+tree.column("Email Address",width=150)
 tree.grid(row=0,column=0)
 
 
@@ -88,6 +90,8 @@ def submit():
     Item.current(0)
     hired.set(1)
     date.selection_set(today)
+    #Inserting customer information
+    tree.insert("",0,values=list1)
     
    
 
