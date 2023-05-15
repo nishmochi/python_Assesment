@@ -12,6 +12,24 @@ today=now.strftime("%m/%d/%Y")
 
 root2=Tk()
 
+#Creating a treeview table to display customer information
+column = ("Customer full name","Reciept number","Item Hired","Number of items","Date of return","Email Address")
+tree=ttk.Treeview(root2,columns=column,show="headings")
+tree.heading('Customer full name', text='Customer full name')
+
+tree.heading('Reciept number', text='Reciept number')
+tree.heading('Item Hired', text='Item Hired')
+tree.column("Item Hired",width=150)
+tree.heading("Number of items",text="Number of items")
+tree.column("Number of items",width=100)
+tree.heading("Date of return",text="Date of return")
+tree.column("Date of return",width=150)
+tree.heading("Email Address",text="Email Address")
+tree.grid(row=0,column=0)
+
+
+
+
 def clear():
     name.delete(0, END)
     number.delete(0, END)
@@ -64,6 +82,16 @@ def submit():
                    
       
     list1=[name.get(),number.get(),Item.get(),hired.get(),date.get_date(),email.get(),]
+    name.delete(0, END)
+    number.delete(0, END)
+    email.delete(0, END)
+    Item.current(0)
+    hired.set(1)
+    date.selection_set(today)
+    
+   
+
+
     
 
 
@@ -151,5 +179,7 @@ button2.grid(row=12,column=1)
 
 root.mainloop()
 
-
 root2.mainloop()
+
+
+
