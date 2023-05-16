@@ -61,16 +61,15 @@ def submit():
                       messagebox.showerror('name Error', 'Error: Please enter valid email address')
                       return
                    
-   #adding customer information into a list
+      
     list1=[name.get(),number.get(),Item.get(),hired.get(),date.get_date(),email.get(),]
-    #Clearing all the information
     name.delete(0, END)
     number.delete(0, END)
     email.delete(0, END)
     Item.current(0)
     hired.set(1)
     date.selection_set(today)
-    #Inserting customer information onto the tree view table
+    #Inserting customer information
     tree.insert("",0,values=list1)
     
    
@@ -185,6 +184,4 @@ tree.grid(row=0,column=0,sticky="N")
 
 
 root.mainloop()
-
-
 
