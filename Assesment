@@ -101,7 +101,27 @@ def select():
    entry.delete(0,END)
 
       
-
+def delete():
+   def yes():
+      root2.destroy()
+      selected=tree.selection()
+      tree.delete(selected)
+   def no():
+      root2.destroy()
+   root2=Tk()
+   root2.title("Confirm")
+   label=Label(root2,text="Are you sure?")
+   label.grid(row=0,column=0)
+   label2=Label(root2,text="")
+   label2.grid(row=1)
+   button=Button(root2,text="Yes",command=yes)
+   button.grid(row=2,column=0,sticky="W")
+   button2=Button(root2,text="No",command=no)
+   button2.grid(row=2,column=0,sticky="E")
+   
+   root2.mainloop()
+   selected=tree.selection()
+   tree.delete(selected)
    
          
          
