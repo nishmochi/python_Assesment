@@ -44,9 +44,14 @@ def submit():
          elif len(number.get())!=0 and len(name.get())==c:
             for x in number.get():
              d=d+1
-             if x not in "1234567890":
+             if len(number.get())>6:
                 messagebox.showerror('name Error', 'Error: Please enter valid reciept number')
                 return
+                
+             elif x not in "1234567890":
+                messagebox.showerror('name Error', 'Error: Please enter valid reciept number')
+                return
+             
              
              #validation for email address
              elif len(email.get())==0 and len(number.get())==d:
@@ -63,7 +68,9 @@ def submit():
                    
    #adding customer information into a list
     list1=[name.get(),number.get(),Item.get(),hired.get(),date.get_date(),email.get(),]
-    #Clearing all the information
+
+    #Clearing all the information and increasing the widget size
+    root.geometry("1500x550")
     name.delete(0, END)
     number.delete(0, END)
     email.delete(0, END)
@@ -73,6 +80,33 @@ def submit():
     #Inserting customer information onto the tree view table
     tree.insert("",0,values=list1)
     
+#function for search button
+def select():
+  
+   a=0
+   list=[]
+   #appending all the values in column 1 into a list
+   for child in tree.get_children():
+      list.append(tree.item(child)["values"][0])
+
+   #checking if any of the values within the list are the same as the value inputted into the search entrybox
+   for x in list:
+      if entry.get()==x:
+         id=tree.get_children()[a]
+         tree.focus(id)
+         tree.selection_set(id)
+         
+      a=a+1
+   
+   entry.delete(0,END)
+
+      
+
+   
+         
+         
+   
+
    
 
 
@@ -88,15 +122,15 @@ label.grid(column=1,columnspan=2,row=0)
 
 #frame1 inlcudes the input widget
 frame1=LabelFrame(root,width=480, height=450, bd=2,padx=10,pady=10)
-frame1.grid(row=1,column=0, padx=10)
+frame1.grid(row=1,column=0, padx=10,rowspan=2)
 
 #frame2 is for the treeview table to display the information
 frame2=Frame(root)
-frame2.grid(column=1,row=1)
+frame2.grid(column=1,row=1,sticky="N")
 
 #functionality of widget 1
 #Collecting customer full name through an entry box
-label3=Label(frame1,text="Customer name:   ",font=("Nimbus Mono L",10) )
+label3=Label(frame1,text="Customer full name:   ",font=("Nimbus Mono L",10) )
 label3.grid(row=0,column=0)
 name=Entry(frame1)
 name.grid(row=0, column=1)
@@ -130,7 +164,7 @@ label.grid(row=5)
 
 label6=Label(frame1, text="Number of Items:   ",font=("Nimbus Mono L",10))
 label6.grid(row=6,column=0)
-hired=Scale(frame1,from_=1, to=500,orient='horizontal')
+hired=Scale(frame1,from_=1, to=500,orient='horizontal',sliderlength=10)
 hired.grid(row=6,column=1)
 
 label=Label(frame1,text="")
@@ -169,18 +203,32 @@ button2.grid(row=12,column=1)
 column = ("Customer full name","Reciept number","Item Hired","Number of items","Date of return","Email Address")
 tree=ttk.Treeview(frame2,columns=column,show="headings")
 tree.heading('Customer full name', text='Customer full name')
-tree.column("Customer full name",width=150)
+tree.column("Customer full name",width=200)
 tree.heading('Reciept number', text='Reciept number')
-tree.column("Reciept number",width=150)
+tree.column("Reciept number",width=100)
 tree.heading('Item Hired', text='Item Hired')
-tree.column("Item Hired",width=150)
+tree.column("Item Hired",width=100)
 tree.heading("Number of items",text="Number of items")
-tree.column("Number of items",width=100)
+tree.column("Number of items",width=150)
 tree.heading("Date of return",text="Date of return")
-tree.column("Date of return",width=150)
+tree.column("Date of return",width=100)
 tree.heading("Email Address",text="Email Address")
-tree.column("Email Address",width=150)
-tree.grid(row=0,column=0,sticky="N")
+tree.column("Email Address",width=190)
+tree.grid(row=0,column=0,columnspan=4)
+
+#Creating a search function to search from the table of names 
+label=Label(frame2,text="")
+label.grid(row=1)
+
+entry=Entry(frame2)
+entry.grid(row=2,column=0,sticky="W")
+search=Button(frame2,text="Search full name",command=select)
+search.grid(row=2,column=0)
+
+#Adding a delete button to delete from the table 
+delete=Button(frame2,text="Delete selected",command=delete)
+delete.grid(row=2,column=0,sticky="E")
+
 
 
 
