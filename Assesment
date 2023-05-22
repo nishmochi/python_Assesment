@@ -10,8 +10,9 @@ from datetime import datetime
 
 now=datetime.now()
 today=now.strftime("%m/%d/%Y")
+count=1
 
-
+#function for the clear button 
 def clear():
     name.delete(0, END)
     number.delete(0, END)
@@ -22,9 +23,11 @@ def clear():
     
 
 def submit():
+    #assigning variables required for this code, these variables are used to count the number of times it loops through a loop
     b=0
     d=0
     c=0
+    global count 
     
     #validation for customer full name 
     if len(name.get())==0:
@@ -46,11 +49,11 @@ def submit():
             for x in number.get():
              d=d+1
              if len(number.get())>6:
-                messagebox.showerror('name Error', 'Error: Please enter valid reciept number')
+                messagebox.showerror('name Error', 'Error: Please enter valid reciept number - Only a maximum of 6 numbers')
                 return
                 
              elif x not in "1234567890":
-                messagebox.showerror('name Error', 'Error: Please enter valid reciept number')
+                messagebox.showerror('name Error', 'Error: Please enter valid reciept number - Numbers only')
                 return
              
              
@@ -68,7 +71,7 @@ def submit():
                       return
                    
    #adding customer information into a list
-    list1=[name.get(),number.get(),Item.get(),hired.get(),date.get_date(),email.get(),]
+    list1=[name.get(),number.get(),Item.get(),hired.get(),date.get_date(),email.get()]
 
     #Clearing all the information and increasing the widget size
     root.geometry("1500x550")
@@ -78,12 +81,28 @@ def submit():
     Item.current(0)
     hired.set(1)
     date.selection_set(today)
-    #Inserting customer information onto the tree view table
-    tree.insert("",0,values=list1)
-    
+    #Inserting customer information onto the tree view table and also creating stripped table
+    if len(tree.get_children())%2==0:
+       tree.insert("",0,values=list1,tags="evenrow")
+    elif len(tree.get_children())%2!=0:
+       tree.insert("",0,values=list1,tags="oddrow")
+       
+      
+  
 #function for search button
 def select():
-  
+   #validating the 
+   if len(search_entry.get())==0:
+      messagebox.showerror('name Error', 'Error: Please search for full name')
+      return 
+   elif len(search_entry.get())!=0:
+      for x in search_entry.get():
+         if x not in "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz ":
+            messagebox.showerror('name Error', 'Error: Please search for valid full name')
+            search_entry.delete(0,END)
+            return
+
+
    a=0
    list=[]
    #appending all the values in column 1 into a list
@@ -92,38 +111,45 @@ def select():
 
    #checking if any of the values within the list are the same as the value inputted into the search entrybox
    for x in list:
-      if (entry.get().lower())==(x.lower()):
+      if (search_entry.get().lower())==(x.lower()):
          id=tree.get_children()[a]
          tree.focus(id)
          tree.selection_set(id)
-         
-      a=a+1
-   
-   entry.delete(0,END)
+         break
+      elif a+1==len(list):
+         messagebox.showerror('name Error', 'Error: the name you have searched does not exist')
 
-#Function for the delete selected function      
+      a=a+1
+   print(len(list))
+   search_entry.delete(0,END)
+
+#Function for the delete selected function, this     
 def delete():
+   #Validaing to check if they surely want to delete the row
+
    def yes():
       root2.destroy()
       selected=tree.selection()
       tree.delete(selected)
+   #if no is selected then the selected row will be unselected and nothing will be delected 
    def no():
       root2.destroy()
+      tree.selection_remove(tree.focus())
+   #a new root where it checks for validation 
    root2=Tk()
-   root2.geometry("150x100")
+   root2.geometry("150x50")
    root2.title("Confirm")
    label=Label(root2,text="Are you sure?")
    label.pack()
    frame3=Frame(root2)
    frame3.pack()
-   button=Button(frame3,text="YES",command=yes)
-   button.grid(row=2,column=0,sticky="W")
-   button2=Button(frame3,text="NO",command=no)
-   button2.grid(row=2,column=1,sticky="E")
+   yes_button=Button(frame3,text="YES",bg="tomato2",command=yes)
+   yes_button.grid(row=2,column=0,sticky="W")
+   no_button2=Button(frame3,text="NO",bg="light green",command=no)
+   no_button2.grid(row=2,column=1,sticky="E")
    
    root2.mainloop()
-   selected=tree.selection()
-   tree.delete(selected)
+   
    
 
 root=Tk()
@@ -143,12 +169,12 @@ frame1.grid(row=1,column=0, padx=10,rowspan=2)
 
 #frame2 is for the treeview table to display the information
 frame2=Frame(root)
-frame2.grid(column=1,row=1,sticky="S")
+frame2.grid(column=1,row=1,sticky="N")
 
 #functionality of widget 1
 #Collecting customer full name through an entry box
-label3=Label(frame1,text="Customer full name:   ",font=Desired_font2 )
-label3.grid(row=0,column=0)
+name_label=Label(frame1,text="Customer full name:   ",font=Desired_font2 )
+name_label.grid(row=0,column=0)
 name=Entry(frame1)
 name.grid(row=0, column=1)
 
@@ -157,8 +183,8 @@ label.grid(row=1)
 
 #collecting customer reciept number through an entry box
 
-label4=Label(frame1, text="Receipt Number:   ",font=Desired_font2)
-label4.grid(row=2, column=0)
+number_label=Label(frame1, text="Receipt Number:   ",font=Desired_font2)
+number_label.grid(row=2, column=0)
 number=Entry(frame1)
 number.grid(row=2, column=1)
 
@@ -167,8 +193,8 @@ label.grid(row=3)
 
 #collecting which item is hired from the customer using a combobox
 
-label5=Label(frame1,text="Item Hired:   ",font=Desired_font2)
-label5.grid(row=4, column=0)
+item_label=Label(frame1,text="Item Hired:   ",font=Desired_font2)
+item_label.grid(row=4, column=0)
 list=["Party hats","Happy Birthday sign","Banners","plates","cups","table clothes","part poppers","cake toppers", "decorations","lightings","sound equipment","chairs","tables","wall draping"]
 Item= ttk.Combobox(frame1, value=list)
 Item.current(0)
@@ -179,8 +205,8 @@ label.grid(row=5)
 
 #collecting the number of items hired by the cutomer through a slider
 
-label6=Label(frame1, text="Number of Items:   ",font=Desired_font2)
-label6.grid(row=6,column=0)
+hired_label=Label(frame1, text="Number of Items:   ",font=Desired_font2)
+hired_label.grid(row=6,column=0)
 hired=Scale(frame1,from_=1, to=500,orient='horizontal',sliderlength=10)
 hired.grid(row=6,column=1)
 
@@ -189,8 +215,8 @@ label.grid(row=7)
 
 #collecting the date of return using a calender function
 
-label7=Label(frame1, text="Date Of Return:   ",font=Desired_font2)
-label7.grid(row=8,column=0)
+date_label=Label(frame1, text="Date Of Return:   ",font=Desired_font2)
+date_label.grid(row=8,column=0)
 date=Calendar(frame1)
 date.grid(row=8,column=1)
 
@@ -200,8 +226,8 @@ label.grid(row=9)
 
 #Collecting the customers email address through an entry box
 
-label8=Label(frame1, text="Email Address:   ",font=Desired_font2)
-label8.grid(row=10, column=0)
+email_label=Label(frame1, text="Email Address:   ",font=Desired_font2)
+email_label.grid(row=10, column=0)
 email=Entry(frame1)
 email.grid(row=10,column=1)
 
@@ -209,14 +235,12 @@ label=Label(frame1,text="")
 label.grid(row=11)
 
 #Adding a submit button and a clear button
-
-button=Button(frame1,text="Submit",font=Desired_font2,bg="light green",command=submit)
-button.grid(row=12,column=0)
-button2=Button(frame1,text="Clear",font=Desired_font2,command=clear)
-button2.grid(row=12,column=1)
+submit_button=Button(frame1,text="Submit",font=Desired_font2,bg="light green",command=submit)
+submit_button.grid(row=12,column=0)
+clear_button=Button(frame1,text="Clear",font=Desired_font2,command=clear)
+clear_button.grid(row=12,column=1)
 
 #fCreating a table to display the data 
-
 column = ("Customer full name","Reciept number","Item Hired","Number of items","Date of return","Email Address")
 tree=ttk.Treeview(frame2,columns=column,show="headings")
 tree.heading('Customer full name', text='Customer full name')
@@ -231,20 +255,25 @@ tree.heading("Date of return",text="Date of return")
 tree.column("Date of return",width=100)
 tree.heading("Email Address",text="Email Address")
 tree.column("Email Address",width=190)
-tree.grid(row=0,column=0,columnspan=4)
+tree.grid(row=0,column=0,columnspan=5)
+
+#creating stripped row tags
+tree.tag_configure("oddrow",background="White")
+tree.tag_configure("evenrow",background="LightCyan2")
+
 
 #Creating a search function to search from the table of names 
-label=Label(frame2,text="")
-label.grid(row=1)
+label_gap=Label(frame2,text="")
+label_gap.grid(row=1)
 
-entry=Entry(frame2)
-entry.grid(row=2,column=0,sticky="W")
-search=Button(frame2,text="Search full name",command=select,font=Desired_font2)
-search.grid(row=2,column=0)
+search_entry=Entry(frame2,width=40)
+search_entry.grid(row=2,column=0,sticky="W")
+search_button=Button(frame2,text="Search full name",command=select,font=Desired_font2)
+search_button.grid(row=2,column=0,sticky="E",padx=5)
 
 #Adding a delete button to delete from the table 
-delete=Button(frame2,text="Delete selected",font=Desired_font2,bg="red",command=delete)
-delete.grid(row=2,column=0,sticky="E")
+delete_button=Button(frame2,text="Delete selected",font=Desired_font2,bg="tomato2",command=delete)
+delete_button.grid(row=2,column=1,sticky="W",padx=5)
 
 
 
