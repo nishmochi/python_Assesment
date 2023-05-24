@@ -121,11 +121,14 @@ def select():
          messagebox.showerror('name Error', 'Error: the name you have searched does not exist')
 
       a=a+1
-   print(len(list))
    search_entry.delete(0,END)
 
 #Function for the delete selected function, this     
 def delete():
+   if tree.item(tree.focus())=={'text': '', 'image': '', 'values': '', 'open': 0, 'tags': ''}:
+      messagebox.showerror('name Error', 'Error: You have not selected anything')
+      return
+
    #Validaing to check if they surely want to delete the row
 
    def yes():
@@ -136,6 +139,8 @@ def delete():
    def no():
       root2.destroy()
       tree.selection_remove(tree.focus())
+      print(tree.item(tree.focus()))
+   
    #a new root where it checks for validation 
    root2=Tk()
    root2.geometry("150x50")
