@@ -8,6 +8,7 @@ from tkinter import messagebox
 import tkinter.font
 from datetime import datetime
 
+
 now=datetime.now()
 today=now.strftime("%m/%d/%Y")
 count=1
@@ -71,6 +72,7 @@ def submit():
                       return
                    
    #adding customer information into a list
+    global list1
     list1=[name.get(),number.get(),Item.get(),hired.get(),date.get_date(),email.get()]
 
     #Clearing all the information and increasing the widget size
@@ -87,7 +89,6 @@ def submit():
     elif len(tree.get_children())%2!=0:
        tree.insert("",0,values=list1,tags="oddrow")
        
-      
   
 #function for search button
 def select():
@@ -149,7 +150,6 @@ def delete():
    no_button2.grid(row=2,column=1,sticky="E")
    
    root2.mainloop()
-   
    
 
 root=Tk()
@@ -274,10 +274,6 @@ search_button.grid(row=2,column=0,sticky="E",padx=5)
 #Adding a delete button to delete from the table 
 delete_button=Button(frame2,text="Delete selected",font=Desired_font2,bg="tomato2",command=delete)
 delete_button.grid(row=2,column=1,sticky="W",padx=5)
-
-
-
-
 root.mainloop()
 
 
