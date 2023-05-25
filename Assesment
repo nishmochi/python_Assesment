@@ -57,7 +57,6 @@ def submit():
                 messagebox.showerror('name Error', 'Error: Please enter valid reciept number - Numbers only')
                 return
              
-             
              #validation for email address
              elif len(email.get())==0 and len(number.get())==d:
                 messagebox.showerror('name Error', 'Error: Please enter email address')
@@ -139,8 +138,8 @@ def delete():
    def no():
       root2.destroy()
       tree.selection_remove(tree.focus())
-      print(tree.item(tree.focus()))
-   
+      tree.focus("")
+
    #a new root where it checks for validation 
    root2=Tk()
    root2.geometry("150x50")
